@@ -31,5 +31,10 @@
       "Modules\\Opx\\FeedBack\\": "src/"
     }
   },
+  "extra": {
+    "opxcms" : {
+      "module": "Modules\\Opx\\FeedBack\\FeedBack"
+    }
+  },
   "minimum-stability": "dev"
 }
