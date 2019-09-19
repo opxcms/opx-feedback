@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'tables' => ['feedback_forms'],
+    'tables' => ['feedback_forms', 'feedback_records'],
 ];
