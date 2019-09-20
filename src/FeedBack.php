@@ -10,6 +10,12 @@ use Modules\Opx\FeedBack\Models\FeedbackForm;
 
 class FeedBack extends BaseModule
 {
+    /** @var string  Module name */
+    protected $name = 'opx_feed_back';
+
+    /** @var string  Module path */
+    protected $path = __DIR__;
+
     /**
      * Render form by alias.
      *
