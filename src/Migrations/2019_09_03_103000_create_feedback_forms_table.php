@@ -27,7 +27,7 @@ class CreateFeedbackFormsTable extends OpxMigration
             $table->layout('form_layout');
 
             $table->string('form_title');
-            $table->longText('form_disclaimer');
+            $table->longText('form_disclaimer')->nullable();
             $table->string('form_button_caption');
 
             $table->longText('success_message');
