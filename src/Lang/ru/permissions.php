@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'list',
-    'add',
-    'edit',
-    'delete',
-    'disable',
-    'notifications',
-    'notifications_delete',
-    'notifications_disable',
+    'list' => 'Просмотр списка форм обратной связи',
+    'add' => 'Добавление форм обратной связи',
+    'edit' => 'Изменение форм обратной связи',
+    'delete' => 'Удаление форм обратной связи',
+    'disable' => 'Отключение форм обратной связи',
+    'notifications' => 'Просмотр уведомлений',
+    'notifications_delete' => 'Удаление уведомлений',
+    'notifications_disable' => 'Пометка уведомлений',
 ];
