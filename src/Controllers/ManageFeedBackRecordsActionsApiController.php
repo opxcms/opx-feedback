@@ -2,14 +2,13 @@
 
 namespace Modules\Opx\FeedBack\Controllers;
 
-use Core\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Core\Http\Controllers\ApiActionsController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Exception;
 use Modules\Opx\FeedBack\Models\FeedbackRecord;
 
-class ManageFeedBackRecordsActionsApiController extends Controller
+class ManageFeedBackRecordsActionsApiController extends ApiActionsController
 {
     /**
      * Delete records with given ids.
@@ -21,19 +20,7 @@ class ManageFeedBackRecordsActionsApiController extends Controller
      */
     public function postDelete(Request $request): JsonResponse
     {
-        $ids = $request->all();
-
-        /** @var EloquentBuilder $records */
-        $records = FeedbackRecord::query()->whereIn('id', $ids)->get();
-
-        if ($records->count() > 0) {
-            /** @var FeedbackRecord $record */
-            foreach ($records as $record) {
-                $record->delete();
-            }
-        }
-
-        return response()->json(['message' => 'success']);
+        return $this->deleteModels(FeedbackRecord::class, $request->all(), 'opx_feed_back::notifications_delete');
     }
 
     /**
@@ -45,19 +32,7 @@ class ManageFeedBackRecordsActionsApiController extends Controller
      */
     public function postRestore(Request $request): JsonResponse
     {
-        $ids = $request->all();
-
-        /** @var EloquentBuilder $records */
-        $records = FeedbackRecord::query()->whereIn('id', $ids)->onlyTrashed()->get();
-
-        if ($records->count() > 0) {
-            /** @var FeedbackRecord $record */
-            foreach ($records as $record) {
-                $record->restore();
-            }
-        }
-
-        return response()->json(['message' => 'success']);
+        return $this->restoreModels(FeedbackRecord::class, $request->all(), 'opx_feed_back::notifications_delete');
     }
 
     /**
@@ -69,22 +44,7 @@ class ManageFeedBackRecordsActionsApiController extends Controller
      */
     public function postEnable(Request $request): JsonResponse
     {
-        $ids = $request->all();
-
-        /** @var EloquentBuilder $records */
-        $records = FeedbackRecord::query()->whereIn('id', $ids)->get();
-
-        if ($records->count() > 0) {
-            /** @var FeedbackRecord $record */
-            foreach ($records as $record) {
-                if (!(bool)$record->getAttribute('checked')) {
-                    $record->setAttribute('checked', true);
-                    $record->save();
-                }
-            }
-        }
-
-        return response()->json(['message' => 'success']);
+        return $this->enableModels(FeedbackRecord::class, $request->all(), 'checked','opx_feed_back::notifications_disable');
     }
 
     /**
@@ -96,23 +56,6 @@ class ManageFeedBackRecordsActionsApiController extends Controller
      */
     public function postDisable(Request $request): JsonResponse
     {
-        $ids = $request->all();
-
-        /** @var EloquentBuilder $records */
-        $records = FeedbackRecord::query()->whereIn('id', $ids)->get();
-
-        if ($records->count() > 0) {
-            /** @var FeedbackRecord $record */
-            foreach ($records as $record) {
-                if ((bool)$record->getAttribute('checked')) {
-                    $record->setAttribute('checked', false);
-                    $record->save();
-                }
-            }
-        }
-
-        return response()->json([
-            'message' => 'success',
-        ]);
+        return $this->disableModels(FeedbackRecord::class, $request->all(), 'checked','opx_feed_back::notifications_disable');
     }
 }

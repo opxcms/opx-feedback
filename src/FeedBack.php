@@ -27,7 +27,7 @@ class FeedBack extends BaseModule
     public function form(string $alias, array $options = [])
     {
         /** @var FeedbackForm $form */
-        $form = FeedbackForm::where('alias', $alias)->first();
+        $form = FeedbackForm::query()->where('alias', $alias)->first();
 
         if ($form === null) {
             return "Form {$alias} not found.";

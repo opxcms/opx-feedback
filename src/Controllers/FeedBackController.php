@@ -41,7 +41,7 @@ class FeedBackController extends Controller
         // run form parser
         $record = $this->parser->parse($name, $payload);
 
-        // add new record with data
+        // add record with data
         $record->save();
 
         // fire event

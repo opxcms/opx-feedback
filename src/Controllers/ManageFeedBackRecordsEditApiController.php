@@ -6,6 +6,7 @@ use Core\Foundation\Templater\Templater;
 use Core\Http\Controllers\APIFormController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Modules\Admin\Authorization\AdminAuthorization;
 use Modules\Opx\FeedBack\Models\FeedbackRecord;
 use Modules\Opx\FeedBack\OpxFeedBack;
 
@@ -22,6 +23,10 @@ class ManageFeedBackRecordsEditApiController extends APIFormController
      */
     public function getEdit(Request $request): JsonResponse
     {
+        if(!AdminAuthorization::can('opx_feed_back::notifications')) {
+            return $this->returnNotAuthorizedResponse();
+        }
+
         /** @var FeedbackRecord $record */
         $id = $request->input('id');
         $record = FeedbackRecord::withTrashed()->where('id', $id)->firstOrFail();

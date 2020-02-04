@@ -6,6 +6,7 @@ use Core\Foundation\Templater\Templater;
 use Core\Http\Controllers\APIFormController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Modules\Admin\Authorization\AdminAuthorization;
 use Modules\Opx\FeedBack\Models\FeedbackForm;
 use Modules\Opx\FeedBack\OpxFeedBack;
 
@@ -24,6 +25,10 @@ class ManageFeedBackFormsEditApiController extends APIFormController
      */
     public function getAdd(): JsonResponse
     {
+        if(!AdminAuthorization::can('opx_feed_back::add')) {
+            return $this->returnNotAuthorizedResponse();
+        }
+
         $template = new Templater(OpxFeedBack::getTemplateFileName('feedback_form.php'));
 
         $template->fillDefaults();
@@ -40,6 +45,10 @@ class ManageFeedBackFormsEditApiController extends APIFormController
      */
     public function getEdit(Request $request): JsonResponse
     {
+        if(!AdminAuthorization::can('opx_feed_back::edit')) {
+            return $this->returnNotAuthorizedResponse();
+        }
+
         /** @var FeedbackForm $form */
         $id = $request->input('id');
         $form = FeedbackForm::withTrashed()->where('id', $id)->firstOrFail();
@@ -58,6 +67,10 @@ class ManageFeedBackFormsEditApiController extends APIFormController
      */
     public function postCreate(Request $request): JsonResponse
     {
+        if(!AdminAuthorization::can('opx_feed_back::add')) {
+            return $this->returnNotAuthorizedResponse();
+        }
+
         $template = new Templater(OpxFeedBack::getTemplateFileName('feedback_form.php'));
 
         $template->resolvePermissions();
@@ -87,6 +100,10 @@ class ManageFeedBackFormsEditApiController extends APIFormController
      */
     public function postSave(Request $request): JsonResponse
     {
+        if(!AdminAuthorization::can('opx_feed_back::edit')) {
+            return $this->returnNotAuthorizedResponse();
+        }
+
         /** @var FeedbackForm $form */
         $id = $request->input('id');
 

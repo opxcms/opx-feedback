@@ -6,11 +6,13 @@ return [
             'caption' => 'opx_feed_back::manage.forms',
             'route' => 'opx_feed_back::feed_back_forms_list',
             'section' => 'system/site',
+            'permission' => 'list',
         ],
         'feedback_forms' => [
-            'caption' => 'opx_feed_back::manage.records',
+            'caption' => 'opx_feed_back::manage.forms',
             'route' => 'opx_feed_back::feed_back_records_list',
-            'parent' => 'feedback',
+            'section' => 'system/notifications',
+            'permission' => 'notifications',
         ],
     ],
 

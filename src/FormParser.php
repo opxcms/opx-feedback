@@ -18,7 +18,8 @@ class FormParser
      */
     public function parse(string $formName, $payload): FeedbackRecord
     {
-        $form = FeedbackForm::where('alias', $formName)->first();
+        /** @var FeedbackForm $form */
+        $form = FeedbackForm::query()->where('alias', $formName)->first();
 
         if ($form === null) {
             throw new RuntimeException("Form [{$formName}] not found");

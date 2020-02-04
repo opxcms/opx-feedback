@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Core\Http\Controllers\APIListController;
 use Illuminate\Http\Request;
+use Modules\Admin\Authorization\AdminAuthorization;
 use Modules\Opx\FeedBack\Models\FeedbackRecord;
 
 class ManageFeedBackRecordsListApiController extends APIListController
@@ -15,13 +16,6 @@ class ManageFeedBackRecordsListApiController extends APIListController
     protected $caption = 'opx_feed_back::manage.records';
     protected $description;
     protected $source = 'manage/api/module/opx_feed_back/feed_back_records_list/feed_back_records';
-
-    protected $enable = 'manage/api/module/opx_feed_back/feed_back_records_actions/enable';
-    protected $disable = 'manage/api/module/opx_feed_back/feed_back_records_actions/disable';
-    protected $delete = 'manage/api/module/opx_feed_back/feed_back_records_actions/delete';
-    protected $restore = 'manage/api/module/opx_feed_back/feed_back_records_actions/restore';
-
-    protected $edit = 'opx_feed_back::feed_back_records_edit';
 
     /**
      * Get list of users with sorting, filters and search.
@@ -32,6 +26,10 @@ class ManageFeedBackRecordsListApiController extends APIListController
      */
     public function postFeedBackRecords(Request $request): JsonResponse
     {
+        if (!AdminAuthorization::can('opx_feed_back::notifications')) {
+            return $this->returnNotAuthorizedResponse();
+        }
+
         $filters = $request->input('filters');
 
         $records = $this->applyFilters($this->makeQuery(), $filters)->paginate(50);
@@ -100,4 +98,56 @@ class ManageFeedBackRecordsListApiController extends APIListController
 
         return $query;
     }
+
+    /**
+     * Get edit link.
+     *
+     * @return  string
+     */
+    protected function getEditLink(): ?string
+    {
+        return AdminAuthorization::can('opx_feed_back::notifications') ? 'opx_feed_back::feed_back_records_edit' : null;
+    }
+
+    /**
+     * Get edit link.
+     *
+     * @return  string
+     */
+    protected function getEnableLink(): ?string
+    {
+        return AdminAuthorization::can('opx_feed_back::notifications_disable') ? 'manage/api/module/opx_feed_back/feed_back_records_actions/enable' : null;
+    }
+
+    /**
+     * Get edit link.
+     *
+     * @return  string
+     */
+    protected function getDisableLink(): ?string
+    {
+        return AdminAuthorization::can('opx_feed_back::notifications_disable') ? 'manage/api/module/opx_feed_back/feed_back_records_actions/disable' : null;
+    }
+
+    /**
+     * Get edit link.
+     *
+     * @return  string
+     */
+    protected function getDeleteLink(): ?string
+    {
+        return AdminAuthorization::can('opx_feed_back::notifications_delete') ? 'manage/api/module/opx_feed_back/feed_back_records_actions/delete' : null;
+    }
+
+    /**
+     * Get edit link.
+     *
+     * @return  string
+     */
+    protected function getRestoreLink(): ?string
+    {
+        return AdminAuthorization::can('opx_feed_back::notifications_delete') ? 'manage/api/module/opx_feed_back/feed_back_records_actions/restore' : null;
+    }
+
+
 }

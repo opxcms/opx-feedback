@@ -9,16 +9,6 @@ use Modules\Opx\FeedBack\Notifications\FeedbackAdminNotification;
 class NewFeedbackListener
 {
     /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-
-    }
-
-    /**
      * Handle the event.
      *
      * @param  NewFeedbackRecord $event
