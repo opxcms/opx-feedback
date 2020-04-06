@@ -25,7 +25,7 @@ class ManageFeedBackFormsEditApiController extends APIFormController
      */
     public function getAdd(): JsonResponse
     {
-        if(!AdminAuthorization::can('opx_feed_back::add')) {
+        if (!AdminAuthorization::can('opx_feed_back::add')) {
             return $this->returnNotAuthorizedResponse();
         }
 
@@ -45,7 +45,7 @@ class ManageFeedBackFormsEditApiController extends APIFormController
      */
     public function getEdit(Request $request): JsonResponse
     {
-        if(!AdminAuthorization::can('opx_feed_back::edit')) {
+        if (!AdminAuthorization::can('opx_feed_back::edit')) {
             return $this->returnNotAuthorizedResponse();
         }
 
@@ -67,7 +67,7 @@ class ManageFeedBackFormsEditApiController extends APIFormController
      */
     public function postCreate(Request $request): JsonResponse
     {
-        if(!AdminAuthorization::can('opx_feed_back::add')) {
+        if (!AdminAuthorization::can('opx_feed_back::add')) {
             return $this->returnNotAuthorizedResponse();
         }
 
@@ -100,7 +100,7 @@ class ManageFeedBackFormsEditApiController extends APIFormController
      */
     public function postSave(Request $request): JsonResponse
     {
-        if(!AdminAuthorization::can('opx_feed_back::edit')) {
+        if (!AdminAuthorization::can('opx_feed_back::edit')) {
             return $this->returnNotAuthorizedResponse();
         }
 
@@ -156,13 +156,21 @@ class ManageFeedBackFormsEditApiController extends APIFormController
      */
     protected function updateFormData(FeedbackForm $form, array $data): FeedbackForm
     {
-        $this->setAttributes($form, $data, [
+        $attributes = [
             'alias', 'name', 'enabled',
             'from_email', 'from_name', 'to_emails', 'email_title',
             'form_layout',
             'form_title', 'form_disclaimer', 'form_button_caption',
             'success_message', 'error_message',
-        ]);
+        ];
+
+        foreach (array_keys($data) as $entry) {
+            if (strpos($entry, '_') === 0) {
+                $attributes[] = $entry;
+            }
+        }
+
+        $this->setAttributes($form, $data, $attributes);
 
         $form->save();
 
