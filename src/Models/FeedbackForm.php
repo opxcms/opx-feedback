@@ -2,6 +2,7 @@
 
 namespace Modules\Opx\FeedBack\Models;
 
+use Core\Traits\Model\DataAttribute;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,7 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class FeedbackForm extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,
+        DataAttribute;
 
     protected $dates = [
         'created_at', 'updated_at', 'deleted_at',
