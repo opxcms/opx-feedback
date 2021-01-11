@@ -2,6 +2,7 @@
 
 namespace Modules\Opx\FeedBack;
 
+use Illuminate\Support\Str;
 use Modules\Opx\FeedBack\Models\FeedbackForm;
 use Modules\Opx\FeedBack\Models\FeedbackRecord;
 use RuntimeException;
@@ -25,7 +26,7 @@ class FormParser
             throw new RuntimeException("Form [{$formName}] not found");
         }
 
-        $method = 'parse' . str_replace(['_', '-'], '', title_case($formName)) . 'Form';
+        $method = 'parse' . str_replace(['_', '-'], '', Str::title($formName)) . 'Form';
 
         if (method_exists($this, $method)) {
             return $this->$method($form, $payload);
