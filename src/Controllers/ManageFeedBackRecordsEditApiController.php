@@ -12,7 +12,7 @@ use Modules\Opx\FeedBack\OpxFeedBack;
 
 class ManageFeedBackRecordsEditApiController extends APIFormController
 {
-    public $editCaption = 'opx_feed_back::manage.edit_record';
+    public string $editCaption = 'opx_feed_back::manage.edit_record';
 
     /**
      * Make form edit form.
@@ -43,12 +43,13 @@ class ManageFeedBackRecordsEditApiController extends APIFormController
     /**
      * Fill template with data.
      *
-     * @param string $filename
      * @param FeedbackRecord $record
+     *
+     * @param string $filename
      *
      * @return  Templater
      */
-    protected function makeTemplate(FeedbackRecord $record, $filename): Templater
+    protected function makeTemplate(FeedbackRecord $record, string $filename): Templater
     {
         $template = new Templater(OpxFeedBack::getTemplateFileName($filename));
 

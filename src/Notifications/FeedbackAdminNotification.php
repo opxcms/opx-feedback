@@ -14,7 +14,7 @@ class FeedbackAdminNotification extends Mailable
     use Queueable, SerializesModels;
 
     /** @var FeedbackRecord */
-    protected $record;
+    protected FeedbackRecord $record;
 
     /** @var FeedbackForm */
     protected $form;
@@ -24,9 +24,8 @@ class FeedbackAdminNotification extends Mailable
      *
      * @param FeedbackRecord $record
      *
-     * @return  void
      */
-    public function __construct($record)
+    public function __construct(FeedbackRecord $record)
     {
         $this->record = $record;
         $this->form = FeedbackForm::query()->where('id', $record->getAttribute('form_id'))->first();

@@ -6,17 +6,18 @@ use Core\Foundation\Templater\Templater;
 use Core\Http\Controllers\APIFormController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use JsonException;
 use Modules\Admin\Authorization\AdminAuthorization;
 use Modules\Opx\FeedBack\Models\FeedbackForm;
 use Modules\Opx\FeedBack\OpxFeedBack;
 
 class ManageFeedBackFormsEditApiController extends APIFormController
 {
-    public $addCaption = 'opx_feed_back::manage.add_form';
-    public $editCaption = 'opx_feed_back::manage.edit_form';
-    public $create = 'manage/api/module/opx_feed_back/feed_back_forms_edit/create';
-    public $save = 'manage/api/module/opx_feed_back/feed_back_forms_edit/save';
-    public $redirect = '/forms/edit/';
+    public string $addCaption = 'opx_feed_back::manage.add_form';
+    public string $editCaption = 'opx_feed_back::manage.edit_form';
+    public string $create = 'manage/api/module/opx_feed_back/feed_back_forms_edit/create';
+    public string $save = 'manage/api/module/opx_feed_back/feed_back_forms_edit/save';
+    public string $redirect = '/forms/edit/';
 
     /**
      * Make form add form.
@@ -64,6 +65,7 @@ class ManageFeedBackFormsEditApiController extends APIFormController
      * @param Request $request
      *
      * @return  JsonResponse
+     * @throws JsonException
      */
     public function postCreate(Request $request): JsonResponse
     {
@@ -97,6 +99,7 @@ class ManageFeedBackFormsEditApiController extends APIFormController
      * @param Request $request
      *
      * @return  JsonResponse
+     * @throws JsonException
      */
     public function postSave(Request $request): JsonResponse
     {
@@ -132,12 +135,13 @@ class ManageFeedBackFormsEditApiController extends APIFormController
     /**
      * Fill template with data.
      *
-     * @param string $filename
      * @param FeedbackForm $form
+     *
+     * @param string $filename
      *
      * @return  Templater
      */
-    protected function makeTemplate(FeedbackForm $form, $filename): Templater
+    protected function makeTemplate(FeedbackForm $form, string $filename): Templater
     {
         $template = new Templater(OpxFeedBack::getTemplateFileName($filename));
 
@@ -153,6 +157,7 @@ class ManageFeedBackFormsEditApiController extends APIFormController
      * @param array $data
      *
      * @return  FeedbackForm
+     * @throws JsonException
      */
     protected function updateFormData(FeedbackForm $form, array $data): FeedbackForm
     {

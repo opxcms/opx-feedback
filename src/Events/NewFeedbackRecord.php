@@ -9,7 +9,7 @@ class NewFeedbackRecord
 {
     use SerializesModels;
 
-    public $record;
+    public FeedbackRecord $record;
 
     /**
      * Create a new feedback event.

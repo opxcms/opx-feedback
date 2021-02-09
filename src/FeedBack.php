@@ -3,6 +3,7 @@
 namespace Modules\Opx\FeedBack;
 
 use Core\Foundation\Module\BaseModule;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Event;
 use Modules\Opx\FeedBack\Events\NewFeedbackRecord;
 use Modules\Opx\FeedBack\Listeners\NewFeedbackListener;
@@ -22,7 +23,7 @@ class FeedBack extends BaseModule
      * @param string $alias
      * @param array $options
      *
-     * @return  string|mixed
+     * @return  string|View
      */
     public function form(string $alias, array $options = [])
     {

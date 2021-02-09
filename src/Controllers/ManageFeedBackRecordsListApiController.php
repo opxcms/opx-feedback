@@ -91,7 +91,7 @@ class ManageFeedBackRecordsListApiController extends APIListController
      *
      * @return  EloquentBuilder
      */
-    public function applyFilters(EloquentBuilder $query, $filters): EloquentBuilder
+    public function applyFilters(EloquentBuilder $query, array $filters): EloquentBuilder
     {
         $query = Filters::processDeletedFilter($query, $filters);
         $query = Filters::processEnabledFilter($query, $filters, 'checked');
