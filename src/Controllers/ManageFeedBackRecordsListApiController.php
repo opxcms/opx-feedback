@@ -30,7 +30,7 @@ class ManageFeedBackRecordsListApiController extends APIListController
             return $this->returnNotAuthorizedResponse();
         }
 
-        $filters = $request->input('filters');
+        $filters = $request->input('filters', []);
 
         $records = $this->applyFilters($this->makeQuery(), $filters)->paginate(50);
 
